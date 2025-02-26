@@ -10,4 +10,5 @@ To remove a todo, press anywhere on the todo to remove it.
 
 ## Future changes
 
+- Break the code into smaller components to improve maintainability and readability
 - Utilize 'local storage' so that the todos are saved in the browser
