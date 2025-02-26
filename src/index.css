@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    outline: 1px solid red;
+    /* outline: 1px solid red; */ 
 }
 body{
     background-color: rgb(59, 59, 59);
@@ -84,7 +84,6 @@ input{
     background-color: rgb(227, 0, 0);
     color: white;
 }
-
 
 @media (max-width: 600px){
     form{
