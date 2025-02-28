@@ -13,7 +13,7 @@ function App() {
   const handleAdd = (e) => {
     e.preventDefault();
     if (input.trim() === '') return;
-    setTodos([...todos, {text: input}])
+    setTodos([...todos, {text: input, done: false}])
     setInput('');
   }
 
@@ -21,15 +21,21 @@ function App() {
     setTodos(todos.filter((todo, index) => index !== indexToDelete))
   }
 
+  const markAsDone = (indexToToggle) => {
+    setTodos(todos.map((todo, index) => {
+      return index === indexToToggle ? {...todo, done: !todo.done} : todo;
+    }))
+  }
+
   return (
     <div className='wrapper'>
       <h1>ToDo-list</h1>
       <form>
         <input 
-          type="note" 
-          name="note" 
-          id="note" 
-          placeholder="Start writing a note..."
+          type="text" 
+          name="noteInput" 
+          id="noteInput" 
+          placeholder="Start writing something..."
           value={input} 
           onChange={handleInputChange}/>
         <button className='add-note-btn' onClick={handleAdd}>ADD</button>
@@ -37,9 +43,16 @@ function App() {
       <div className="todo-container">
         {todos.map((todo, index) => {
           return (
-            <div className="todo" key={index} onClick={() => handleDelete(index)}>
+            <div 
+              className={`todo ${todo.done ? 'done' : ''}`}
+              key={index} 
+              onClick={() => markAsDone(index)}>
               <button 
                 className="dlt-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(index);
+                }}
                 >Delete</button>
               {todo.text}
             </div>

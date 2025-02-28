@@ -55,7 +55,7 @@ input{
 .todo-container{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
     gap: 20px;
 }
 .todo{
@@ -67,6 +67,7 @@ input{
     position: relative;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    transition-duration: 300ms;
 }
 .dlt-btn{
     background-color: transparent;
@@ -83,6 +84,19 @@ input{
 .todo:hover .dlt-btn{
     background-color: rgb(227, 0, 0);
     color: white;
+}
+
+.todo:hover .dlt-btn:hover{
+    background-color: rgb(187, 0, 0);
+}
+
+.done {
+    background-color: grey;
+    text-decoration: line-through;
+}
+
+.done:hover{
+    background-color: rgb(145, 145, 145);
 }
 
 @media (max-width: 600px){
