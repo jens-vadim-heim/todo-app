@@ -10,48 +10,66 @@ function App() {
     setInput(e.target.value);
   }
   
-  const handleAdd = (e) => {
+  const addTodo = (e) => {
     e.preventDefault();
     if (input.trim() === '') return;
     setTodos([...todos, {text: input, done: false}])
     setInput('');
   }
 
-  const handleDelete = (indexToDelete) => {
-    setTodos(todos.filter((todo, index) => index !== indexToDelete))
+  const deleteTodo = (indexToDelete) => {
+    setTodos(
+      todos.filter((todo, index) => {
+        return index !== indexToDelete;
+      })
+    )
   }
 
-  const markAsDone = (indexToToggle) => {
-    setTodos(todos.map((todo, index) => {
-      return index === indexToToggle ? {...todo, done: !todo.done} : todo;
-    }))
+  const toggleTodoStatus = (indexToToggle) => {
+    setTodos(
+      todos.map((todo, index) => {
+        return index === indexToToggle ? {...todo, done: !todo.done} : todo;
+      })
+    )
+  }
+
+  const clearCompletedTodos = (e) => {
+    e.preventDefault();
+    setTodos(
+      todos.filter(todo => {
+        return !todo.done;
+      })
+    )
   }
 
   return (
-    <div className='wrapper'>
-      <h1>ToDo-list</h1>
+    <div className='app-container'>
+      <h1>ToDo-App</h1>
       <form>
         <input 
           type="text" 
-          name="noteInput" 
-          id="noteInput" 
+          name="todoInput" 
+          id="todoInput" 
           placeholder="Start writing something..."
           value={input} 
           onChange={handleInputChange}/>
-        <button className='add-note-btn' onClick={handleAdd}>ADD</button>
+        <div className="controls">
+          <button className='add btn' onClick={addTodo}>ADD</button>
+          <button className='clear btn' onClick={clearCompletedTodos}>DEL</button>
+        </div>
       </form>
-      <div className="todo-container">
+      <div className="todo-list">
         {todos.map((todo, index) => {
           return (
             <div 
-              className={`todo ${todo.done ? 'done' : ''}`}
+              className={`todo-item ${todo.done ? 'completed-todo' : ''}`}
               key={index} 
-              onClick={() => markAsDone(index)}>
+              onClick={() => toggleTodoStatus(index)}>
               <button 
-                className="dlt-btn"
+                className="delete-todo-btn"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleDelete(index);
+                  deleteTodo(index);
                 }}
                 >Delete</button>
               {todo.text}
