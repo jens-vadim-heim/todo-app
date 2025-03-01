@@ -83,7 +83,6 @@ form{
     word-wrap: break-word;
     overflow-wrap: break-word;
     
-    transition-duration: 300ms;
     cursor: pointer;
 }
 .delete-todo-btn{
@@ -97,7 +96,6 @@ form{
     right: 0;
     padding: 5px;
     cursor: pointer;
-    transition: opacity 300ms ease-in-out;
 }
 .todo-item:hover .delete-todo-btn{
     opacity: 1;
@@ -110,9 +108,6 @@ form{
 .completed-todo {
     background-color: grey;
     text-decoration: line-through;
-}
-.completed-todo:hover{
-    background-color: rgb(145, 145, 145);
 }
 
 @media (max-width: 600px){
