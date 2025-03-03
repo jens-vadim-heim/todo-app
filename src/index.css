@@ -51,7 +51,6 @@ form{
     font-size: 20px;
     padding: 10px;
     border-radius: 10px;
-    transition-duration: 300ms;
 }
 .add{
     background-color: rgb(0, 255, 110);
