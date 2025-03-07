@@ -1,6 +1,6 @@
-# ToDo list
+# ToDo web app
 
-This is a simple "todo list" web application developed using HTML, CSS and Javascript (React), built using Vite. 
+This is a simple "todo list" web app developed using HTML, CSS and Javascript (React), built using Vite. 
 
 It allows the user to type in a note ("todo"), then add it to the list of todos. 
 
