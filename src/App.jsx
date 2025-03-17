@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="app-container">
       <div className="top-part">
-        <h1>ToDo-App</h1>
+        <h1>ToDo</h1>
         <form>
           <input
             type="text"
