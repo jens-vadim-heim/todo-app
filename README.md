@@ -2,6 +2,8 @@
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62E)
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live-green?style=for-the-badge)](https://todo-app-three-tau-90.vercel.app/)
+
 A simple and lightweight Todo application built with React, styled with CSS, and powered by Vite. Users can add tasks, mark them as completed, and remove completed tasks. Todos are saved in the browser's local storage, so they persist across page reloads.
 
 ## Stack
