@@ -21,6 +21,10 @@
   /* outline: 1px solid red; */
 }
 
+html {
+  background-color: var(--bg-dark);
+}
+
 body {
   background-color: rgb(61, 61, 61);
   background: linear-gradient(var(--bg-dark), var(--bg-light));
