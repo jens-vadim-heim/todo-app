@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import Todo from "./Todo";
-import Modal from "./Modal";
 import Message from "./Message";
 
 const TodoList = () => {
-  const [todos, setTodos] = useState([]);
-  const [view, setView] = useState("list");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  // State
 
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState("");
+  const [filter, setFilter] = useState("all");
+
+  // EFFECTS
+
+  // Load todos from localStorage on mount
   useEffect(() => {
     const storedTodos = localStorage.getItem("TODOS");
     console.log("Loading todos from localStorage:", storedTodos);
@@ -16,10 +20,36 @@ const TodoList = () => {
     }
   }, []);
 
+  // Save todos to localStorage on add
   useEffect(() => {
     console.log("Saving todos to localStorage:", todos);
     localStorage.setItem("TODOS", JSON.stringify(todos));
   }, [todos]);
+
+  // HANDLERS
+
+  // Input change
+  const handleChange = (e) => {
+    setTodo(e.target.value);
+    console.log(e.target.value);
+  };
+
+  // Form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (todo.trim() === "") return;
+
+    const newTodo = {
+      id: Date.now(),
+      text: todo.trim(),
+      completed: false,
+    };
+
+    addTodo(newTodo);
+    setTodo("");
+  };
+
+  // TODO MANIPULATION
 
   const toggleCompleted = (id) => {
     const updated = todos.map((todo) => {
@@ -35,52 +65,82 @@ const TodoList = () => {
     setTodos((prev) => prev.filter((todo) => !todo.completed));
   };
 
-  const toggleView = () => {
-    setView((prev) => (prev === "list" ? "grid" : "list"));
+  const removeTodo = (id) => {
+    setTodos((prev) =>
+      prev.filter((todo) => {
+        return todo.id !== id;
+      })
+    );
   };
 
   const addTodo = (todo) => {
     setTodos((prev) => [...prev, todo]);
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
+  // FILTERING
+
+  // Filter todo list based on chosen filters
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "all") return true;
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
+  });
 
   return (
-    <>
-      {modalIsOpen && <Modal addTodo={addTodo} closeModal={closeModal} />}
-
+    <div className="todo-list">
       <div className="controls">
-        <button className="create-btn" onClick={() => setModalIsOpen(true)}>
-          Create
-        </button>
-        <button className="remove-btn" onClick={removeCompleted}>
-          Remove completed
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Add new task..."
+            value={todo}
+            onChange={handleChange}
+          />
+          <button className="create-btn">+</button>
+        </form>
+      </div>
+
+      {/* Filter buttons */}
+      <div className="filter-buttons">
+        <button
+          className={filter === "all" ? "active" : ""}
+          onClick={() => setFilter("all")}
+        >
+          All
         </button>
         <button
-          className="view-btn"
-          onClick={toggleView}
-          disabled={todos.length == 0}
+          className={filter === "active" ? "active" : ""}
+          onClick={() => setFilter("active")}
         >
-          {view === "list" ? "Grid" : "List"} view
+          Active
+        </button>
+        <button
+          className={filter === "completed" ? "active" : ""}
+          onClick={() => setFilter("completed")}
+        >
+          Completed
         </button>
       </div>
 
-      <br />
+      {/* List of todo items */}
+      <ul className={`todo-container`}>
+        {filteredTodos.length == 0 && <Message message={"No todos to show."} />}
 
-      {todos.length == 0 && <Message message={"All done! No todos to show."} />}
-
-      <ul className={`todo-container ${view}`}>
-        {todos.map((todo) => (
+        {filteredTodos.map((todo) => (
           <Todo
             key={todo.id}
             data={todo}
+            deleteTodo={removeTodo}
             toggleCompleted={() => toggleCompleted(todo.id)}
           />
         ))}
       </ul>
-    </>
+
+      {/* Clear button */}
+      <button className="remove-btn" onClick={removeCompleted}>
+        Clear completed
+      </button>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import TodoList from "./TodoList";
 const Dashboard = () => {
   return (
     <div className="dashboard">
-      <p className="app-header">Todo-app</p>
+      <p className="app-header">✅ Todo app</p>
       <TodoList />
     </div>
   );
